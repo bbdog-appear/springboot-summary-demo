@@ -25,6 +25,8 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <!-- 在此标签中的依赖，只是进行管理，但并不引入，module中需要单独配置，版本号是指向这里的
+        作用是多个module使用某个包，不需要每个都要配置版本号-->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -36,11 +38,10 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>2.4.3</version>
+                <!-- 表示在什么时候需要使用到该依赖，并会影响传递依赖 -->
                 <scope>test</scope>
             </dependency>
-
         </dependencies>
-
     </dependencyManagement>
 
 </project>

@@ -21,6 +21,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <!-- 表示在什么时候需要使用到该依赖，并会影响传递依赖 -->
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -29,7 +30,9 @@
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
+                <!-- 该插件在打Jar包时会引入依赖包 -->
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.4.3</version>
             </plugin>
         </plugins>
     </build>
