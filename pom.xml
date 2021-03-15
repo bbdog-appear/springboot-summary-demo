@@ -34,6 +34,36 @@
                 <artifactId>springboot-summary-demo-biz</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
             </dependency>
+            <dependency>
+                <groupId>com.bbdog.study</groupId>
+                <artifactId>springboot-summary-demo-common</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbdog.study</groupId>
+                <artifactId>springboot-summary-demo-service</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbdog.study</groupId>
+                <artifactId>springboot-summary-demo-core</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbdog.study</groupId>
+                <artifactId>springboot-summary-demo-dal</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbdog.study</groupId>
+                <artifactId>springboot-summary-demo-manager</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>com.bbdog.study</groupId>
+                <artifactId>springboot-summary-demo-task</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -46,6 +76,12 @@
                 <version>2.3.7.RELEASE</version>
                 <!-- 表示在什么时候需要使用到该依赖，并会影响传递依赖 -->
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.0</version>
             </dependency>
 
             <!-- 引入springboot dataRedis -->
