@@ -32,14 +32,21 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-web</artifactId>
-                <version>2.4.3</version>
+                <version>2.3.7.RELEASE</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
-                <version>2.4.3</version>
+                <version>2.3.7.RELEASE</version>
                 <!-- 表示在什么时候需要使用到该依赖，并会影响传递依赖 -->
                 <scope>test</scope>
+            </dependency>
+
+            <!-- 引入springboot dataRedis -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-redis</artifactId>
+                <version>2.3.7.RELEASE</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
