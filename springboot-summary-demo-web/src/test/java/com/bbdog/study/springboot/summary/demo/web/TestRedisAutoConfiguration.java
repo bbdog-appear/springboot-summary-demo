@@ -2,7 +2,6 @@ package com.bbdog.study.springboot.summary.demo.web;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisCallback;
@@ -10,7 +9,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import javax.annotation.Resource;
-import java.nio.charset.StandardCharsets;
 
 /**
  * <p>
@@ -22,20 +20,22 @@ import java.nio.charset.StandardCharsets;
  */
 public class TestRedisAutoConfiguration extends SpringbootSummaryDemoWebApplicationTests{
 
-    @Autowired
-    private ThreadPoolTaskExecutor threadPoolTaskExecutor;
+    /**
+     * 1、这里如果RedisTemplate指定泛型，则需要用@Resource注解，如果不指定泛型，则可以用@Autowired注解，具体原因：
+     * https://blog.51cto.com/qiangmzsx/1359952
+     * 2、springboot2.0后，RedisTemplate自动注入到spring容器中，所以这里直接可以引用，不用配置RedisConnection
+     * 或者RedisTemplate，只需要在application.properties中配置redis数据源即可，且前缀要保证正确。
+     */
     @Resource
-    private RedisTemplate<String, ?> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Test
     void testRedisAutoConfiguration() {
         String key = "dogKey";
-        redisTemplate.execute(new RedisCallback<Boolean>() {
-            @Override
-            public Boolean doInRedis(RedisConnection connection) throws DataAccessException {
-                connection.set(key.getBytes(), key.getBytes());
-                return null;
-            }
+        String value = "dogValue";
+        redisTemplate.execute((RedisCallback<Boolean>) connection -> {
+            connection.set(key.getBytes(), value.getBytes());
+            return true;
         });
     }
 
