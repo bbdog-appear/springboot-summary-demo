@@ -19,8 +19,13 @@
     <dependencies>
         <dependency>
             <groupId>com.bbdog.study</groupId>
-            <artifactId>springboot-summary-demo-common</artifactId>
+            <artifactId>springboot-summary-demo-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.bbdog.study</groupId>
+            <artifactId>springboot-summary-demo-biz</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
