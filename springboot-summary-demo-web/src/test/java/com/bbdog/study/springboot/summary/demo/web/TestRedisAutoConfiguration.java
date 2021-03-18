@@ -1,6 +1,6 @@
 package com.bbdog.study.springboot.summary.demo.web;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -30,7 +30,7 @@ public class TestRedisAutoConfiguration extends SpringbootSummaryDemoWebApplicat
     private RedisTemplate<String, Object> redisTemplate;
 
     @Test
-    void testRedisAutoConfiguration() {
+    public void testRedisAutoConfiguration() {
         String key = "dogKey";
         String value = "dogValue";
         redisTemplate.execute((RedisCallback<Boolean>) connection -> {

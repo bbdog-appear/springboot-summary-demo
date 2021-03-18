@@ -5,14 +5,10 @@ import com.bbdog.study.springboot.summary.demo.api.models.BootCommonConfigDTO;
 import com.bbdog.study.springboot.summary.demo.api.models.BootCommonConfigReqDTO;
 import com.bbdog.study.springboot.summary.demo.api.models.BootCommonConfigResDTO;
 import com.bbdog.study.springboot.summary.demo.api.result.Result;
-import com.bbdog.study.springboot.summary.demo.biz.BootCommonConfigBiz;
-import com.bbdog.study.springboot.summary.demo.common.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisCallback;
 
-import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -33,19 +29,19 @@ public class TestBootCommonConfig extends SpringbootSummaryDemoWebApplicationTes
     private BootCommonConfigService bootCommonConfigService;
 
     @Test
-    void testRedisAutoConfiguration() {
+    public void testRedisAutoConfiguration() {
         BootCommonConfigReqDTO bootCommonConfigReqDTO = new BootCommonConfigReqDTO();
-        bootCommonConfigReqDTO.setCommonKey("10001");
+        bootCommonConfigReqDTO.setCommonKey("30001");
         List<BootCommonConfigDTO> bootCommonConfigDTOList = new ArrayList<>();
         BootCommonConfigDTO bootCommonConfigDTO1 = new BootCommonConfigDTO();
         bootCommonConfigDTO1.setCommonType("furniture");
-        bootCommonConfigDTO1.setCommonKey("30001");
-        bootCommonConfigDTO1.setCommonValue("沙发");
+        bootCommonConfigDTO1.setCommonKey("30003");
+        bootCommonConfigDTO1.setCommonValue("椅子");
         bootCommonConfigDTOList.add(bootCommonConfigDTO1);
         BootCommonConfigDTO bootCommonConfigDTO2 = new BootCommonConfigDTO();
         bootCommonConfigDTO2.setCommonType("furniture");
-        bootCommonConfigDTO2.setCommonKey("30002");
-        bootCommonConfigDTO2.setCommonValue("餐桌");
+        bootCommonConfigDTO2.setCommonKey("30004");
+        bootCommonConfigDTO2.setCommonValue("床");
         bootCommonConfigDTOList.add(bootCommonConfigDTO2);
         bootCommonConfigReqDTO.setBootCommonConfigDTOList(bootCommonConfigDTOList);
         Result<BootCommonConfigResDTO> result = bootCommonConfigService.synchronousDataAndQuery(traceLogId, bootCommonConfigReqDTO);
