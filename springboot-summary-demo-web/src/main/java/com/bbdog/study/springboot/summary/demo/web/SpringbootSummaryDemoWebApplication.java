@@ -10,7 +10,8 @@ import org.springframework.context.annotation.ComponentScan;
  *      web层启动项
  *      注意：除了@SpringBootApplication，需要另外加的注解
  *      1、需要在主Application中加入@ComponentScan扫包注解，因为该项目是多module的，所以需要另外指定一下需要扫描的包路径。
- *      2、@MapperScan注解的作用是mybatis执行jdbc时扫的mapper类，执行sql语句。
+ *      2、@MapperScan注解的作用是mybatis执行jdbc时扫的mapper类，执行sql语句，该注解不加也不会报错，原因暂时未知。会不会和
+ *      ComponentScan扫描有关系
  * </p>
  *
  * @author cheng.wang
