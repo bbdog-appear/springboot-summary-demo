@@ -53,4 +53,22 @@ public class BootCommonConfigConverter {
         return bootCommonConfigDoS;
     }
 
+    /**
+     * BootCommonConfigDO --> BootCommonConfigBO
+     *
+     * @param bootCommonConfigDO BootCommonConfigDO
+     * @return BootCommonConfigBO
+     */
+    public static BootCommonConfigBO bootCommonConfigDoToBo(BootCommonConfigDO bootCommonConfigDO){
+        if (bootCommonConfigDO == null) {
+            return null;
+        }
+        BootCommonConfigBO bootCommonConfigBO = new BootCommonConfigBO();
+        bootCommonConfigBO.setId(bootCommonConfigDO.getId());
+        bootCommonConfigBO.setCommonType(bootCommonConfigDO.getCommonType());
+        bootCommonConfigBO.setCommonKey(bootCommonConfigDO.getCommonKey());
+        bootCommonConfigBO.setCommonValue(bootCommonConfigDO.getCommonValue());
+        return bootCommonConfigBO;
+    }
+
 }

@@ -10,6 +10,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class BootCommonConfigManager {
     @Autowired
     private SqlSessionFactory sqlSessionFactory;
 
+    @Autowired
+    private BootCommonConfigMapper bootCommonConfigMapper;
+
     /**
      * 批量插入通用配置信息
      *
@@ -40,6 +44,21 @@ public class BootCommonConfigManager {
             bootCommonConfigDoS.forEach(mapper::insert);
             session.commit();
         }
+    }
+
+    /**
+     * 根据commonKey查询通用配置信息
+     *
+     * @param commonKey 通用key
+     * @return 通用配置信息BO
+     */
+    public BootCommonConfigBO queryByCommonKey(String commonKey){
+        List<BootCommonConfigDO> bootCommonConfigDoS = bootCommonConfigMapper.selectByCommonKey(commonKey);
+        BootCommonConfigBO bootCommonConfigBO = null;
+        if (!CollectionUtils.isEmpty(bootCommonConfigDoS)) {
+            bootCommonConfigBO = BootCommonConfigConverter.bootCommonConfigDoToBo(bootCommonConfigDoS.get(0));
+        }
+        return bootCommonConfigBO;
     }
 
 }

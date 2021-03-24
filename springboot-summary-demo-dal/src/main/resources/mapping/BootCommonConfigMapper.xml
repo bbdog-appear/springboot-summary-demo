@@ -23,13 +23,13 @@
         (#{commonType,jdbcType=VARCHAR},#{commonKey,jdbcType=VARCHAR},#{commonValue,jdbcType=VARCHAR})
     </insert>
 
-    <select id="selectByCommonType" resultMap="baseResultMap">
-        /* BootCommonConfigMapper.selectByCommonType */
+    <select id="selectByCommonKey" resultMap="baseResultMap">
+        /* BootCommonConfigMapper.selectByCommonKey */
         select
         <include refid="base_column_list"/>
         from boot_common_config
         where
-        common_type = #{commonType,jdbcType=VARCHAR}
+        common_key = #{commonKey,jdbcType=VARCHAR}
     </select>
 
 </mapper>

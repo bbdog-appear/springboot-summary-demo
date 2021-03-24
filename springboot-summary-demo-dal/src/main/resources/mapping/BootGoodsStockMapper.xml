@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bbdog.study.springboot.summary.demo.dal.mapper.BootGoodsStockMapper">
+    <resultMap id="baseResultMap" type="com.bbdog.study.springboot.summary.demo.dal.models.BootGoodsStockDO">
+        <id     column="id"                 property="id"               jdbcType="INTEGER"/>
+        <result column="goods_code"         property="goodsCode"        jdbcType="VARCHAR"/>
+        <result column="goods_name"         property="goodsName"        jdbcType="VARCHAR"/>
+        <result column="goods_price"        property="goodsPrice"       jdbcType="INTEGER"/>
+        <result column="goods_total_num"    property="goodsTotalNum"    jdbcType="INTEGER"/>
+        <result column="goods_remain_num"   property="goodsRemainNum"   jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="base_column_list">
+        `id`,
+        `goods_code`,
+        `goods_name`,
+        `goods_price`,
+        `goods_total_num`,
+        `goods_remain_num`
+    </sql>
+
+    <insert id="insert" parameterType="com.bbdog.study.springboot.summary.demo.dal.models.BootGoodsStockDO" >
+        /* BootGoodsStockMapper.insert */
+        insert into boot_goods_stock_info
+        (`goods_code`,`goods_name`,`goods_price`,`goods_total_num`,`goods_remain_num`)
+        values
+        (#{goodsCode,jdbcType=VARCHAR},#{goodsName,jdbcType=VARCHAR},#{goodsPrice,jdbcType=INTEGER},
+         #{goodsTotalNum,jdbcType=INTEGER},#{goodsRemainNum,jdbcType=INTEGER})
+    </insert>
+
+</mapper>

@@ -42,4 +42,14 @@ public class BootCommonConfigCore {
                 RedisConstant.BOOT_SUMMARY_COMMON_CONFIG_KEY + bo.getCommonKey(), bo, RedisConstant.EXPIRE_TIME));
     }
 
+    /**
+     * 根据commonKey查询通用配置信息
+     *
+     * @param commonKey 通用key
+     * @return 通用配置信息BO
+     */
+    public BootCommonConfigBO queryByCommonKey(String commonKey){
+        return bootCommonConfigManager.queryByCommonKey(commonKey);
+    }
+
 }

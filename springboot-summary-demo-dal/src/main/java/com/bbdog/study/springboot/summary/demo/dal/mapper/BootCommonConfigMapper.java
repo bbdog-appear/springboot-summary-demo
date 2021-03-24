@@ -1,6 +1,7 @@
 package com.bbdog.study.springboot.summary.demo.dal.mapper;
 
 import com.bbdog.study.springboot.summary.demo.dal.models.BootCommonConfigDO;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,11 +24,11 @@ public interface BootCommonConfigMapper {
     void insert(BootCommonConfigDO bootCommonConfigDO);
 
     /**
-     * 根据commonType查询
+     * 根据commonKey查询
      *
-     * @param commonType 类型
+     * @param commonKey key
      * @return 结果
      */
-    List<BootCommonConfigDO> selectByCommonType(@Param("commonType") String commonType);
+    List<BootCommonConfigDO> selectByCommonKey(@Param("commonKey") String commonKey);
 
 }
