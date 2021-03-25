@@ -32,6 +32,11 @@ public class BootPublishGoodsController {
     @Autowired
     private BootGoodsEventService bootGoodsEventService;
 
+    /**
+     * 查询通用信息并发布商品事件
+     *
+     * @return 返回结果
+     */
     @RequestMapping(value = "/queryCommonPublishGoods", method = RequestMethod.GET)
     public Object queryCommonPublishGoods(){
         BootGoodsEventReqDTO bootGoodsEventReqDTO = new BootGoodsEventReqDTO();
