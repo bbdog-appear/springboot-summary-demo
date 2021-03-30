@@ -7,17 +7,20 @@ import com.bbdog.study.springboot.summary.demo.manager.models.BootGoodsStockBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
  *      商品添加监听，监听BootGoodsAddEvent消息
  *      还可以使用注解的方式实现监听，另外写一下线程池的注解方式
+ *      注意：需要加上component注解，被spring管理，监听才能生效
  * </p>
  *
  * @author cheng.wang
  * @version Id：BootGoodsAddListener.java Date：2021/3/23 16:10 Version：1.0
  */
 @Slf4j
+@Component
 public class BootGoodsAddListener implements ApplicationListener<BootGoodsAddEvent> {
 
     @Autowired

@@ -1,6 +1,5 @@
 package com.bbdog.study.springboot.summary.demo.web.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.bbdog.study.springboot.summary.demo.api.BootGoodsEventService;
 import com.bbdog.study.springboot.summary.demo.api.models.BootCommonConfigResDTO;
 import com.bbdog.study.springboot.summary.demo.api.models.BootGoodsEventReqDTO;
@@ -8,6 +7,7 @@ import com.bbdog.study.springboot.summary.demo.api.models.BootGoodsStockDTO;
 import com.bbdog.study.springboot.summary.demo.api.result.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +37,7 @@ public class BootPublishGoodsController {
      *
      * @return 返回结果
      */
-    @RequestMapping(value = "/queryCommonPublishGoods", method = RequestMethod.GET)
+    @GetMapping("/queryCommonPublishGoods")
     public Object queryCommonPublishGoods(){
         BootGoodsEventReqDTO bootGoodsEventReqDTO = new BootGoodsEventReqDTO();
         bootGoodsEventReqDTO.setCommonKey("10003");

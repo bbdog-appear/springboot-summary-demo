@@ -7,16 +7,19 @@ import com.bbdog.study.springboot.summary.demo.manager.models.BootGoodsStockBO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.stereotype.Component;
 
 /**
  * <p>
  *      注解的方式进行监听
+ *      注意：需要加上component注解，被spring管理，监听才能生效
  * </p>
  *
  * @author cheng.wang
  * @version Id：GoodsAnnotationListener.java Date：2021/3/24 9:19 Version：1.0
  */
 @Slf4j
+@Component
 public class GoodsAnnotationListener {
 
     @Autowired
