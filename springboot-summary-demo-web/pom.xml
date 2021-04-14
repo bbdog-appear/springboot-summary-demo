@@ -24,6 +24,11 @@
             <!-- 表示在什么时候需要使用到该依赖，并会影响传递依赖 -->
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>easyexcel</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
