@@ -7,15 +7,16 @@ import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.bbdog.study.springboot.summary.demo.api.BootCommonConfigService;
 import com.bbdog.study.springboot.summary.demo.service.BootCommonConfigServiceImpl;
-import com.bbdog.study.springboot.summary.demo.web.javatooltest.easyexcel.BootDataListener;
-import com.bbdog.study.springboot.summary.demo.web.javatooltest.easyexcel.BootDataRead;
-import com.bbdog.study.springboot.summary.demo.web.javatooltest.easyexcel.BootDataWrite;
+import com.bbdog.study.springboot.summary.demo.web.javatooltest.easyexcel.*;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -25,6 +26,7 @@ import java.util.List;
  * @author cheng.wang
  * @version Id：TestCommon.java Date：2021/4/14 10:32 Version：1.0
  */
+@Slf4j
 public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
 
     @Autowired
@@ -92,6 +94,30 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
         bootDataWriteList.add(bootDataWrite1);
         bootDataWriteList.add(bootDataWrite2);
         return bootDataWriteList;
+    }
+
+    /**
+     * 测试阿里的EasyExcel读取,此种是未知Excel中表头的字段名称的。因此Model中字段就不知道什么含义了，随便定义10个字段，
+     * 然后直接读取Excel的值。这种情况是需要知道关键字段的位置的。所以将关键字段约定好放在Excel的前几行，那么Model中就可以
+     * 定义前几个字段，对其进行校验。
+     * 但是到时候写出的时候，由于其他字段的名字未知，所以在读的时候，需要获取文件表头字段，然后一一对应下来。
+     */
+    @Test
+    public void testEasyExcelReadUKnownField(){
+        // 前提：在本机的D盘中放一个333abc.xlsx文件
+        String fileName = "D:\\333abc.xlsx";
+
+        // 构建ExcelReader，指定读取的文件，装载数据的类型，回调对象
+        BootDataUKnownListener listener = new BootDataUKnownListener();
+        ExcelReader reader = EasyExcel.read(fileName, BootDataReadUKnown.class, listener).build();
+
+        // 当执行这个方法，就会循环触发回调对象中的invoke方法。
+        reader.read(new ReadSheet(0));
+        reader.finish();
+
+        Integer total = listener.getHandleResultCount().getTotal();
+        Integer success = listener.getHandleResultCount().getSuccess();
+        log.info("总条数：{}，成功条数：{}", total, success);
     }
 
 }
