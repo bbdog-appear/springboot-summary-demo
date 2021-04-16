@@ -27,13 +27,34 @@ import java.util.stream.Collectors;
 @Slf4j
 public class BootDataUKnownListener extends AnalysisEventListener<BootDataReadUKnown> {
 
+    /**
+     * 由于先读到表头信息，所以需要作为成员变量，再调用invoke时，同一个对象里，就可以拿到相同的headMap进行操作
+     */
     private Map<Integer, String> headMap;
+    /**
+     * 用户将该数据写出到完整的Excel中
+     */
     private final List<BootDataReadUKnown> bootDataReadUKnownList = new ArrayList<>();
+    /**
+     * 写出的Sheet
+     */
     private final WriteSheet writeSheet = new WriteSheet();
+    /**
+     * 用于写出一个完成文件
+     */
     private ExcelWriter writer;
+    /**
+     * 判断是否已经生成表头标志
+     */
     private Boolean consoleFileFlag = true;
+    /**
+     * 总条数和成功条数
+     */
     private final HandleResultCount handleResultCount = new HandleResultCount();
-    private final List<BootDataReadUKnown> groupList = new ArrayList<>();
+    /**
+     * 用于后面表格拆分，做分组的的列表
+     */
+    private final List<BootDataReadUKnown> groupingList = new ArrayList<>();
 
     /**
      * 读取文件头字段
@@ -97,7 +118,7 @@ public class BootDataUKnownListener extends AnalysisEventListener<BootDataReadUK
             handleResultCount.setSuccess(handleResultCount.getSuccess() + 1);
 
             // 校验成功的这一行数据存入将要分组的列表中
-            groupList.add(data);
+            groupingList.add(data);
         }
 
         // 5、将这个数据写出到另一个Excel中，每1000条写出一次
@@ -122,7 +143,7 @@ public class BootDataUKnownListener extends AnalysisEventListener<BootDataReadUK
 
         // 拆分表的逻辑
         // 根据(代理商号-月份)分组
-        Map<String, List<BootDataReadUKnown>> agentMonthMap = groupList.stream().collect(
+        Map<String, List<BootDataReadUKnown>> agentMonthMap = groupingList.stream().collect(
                 Collectors.groupingBy(item -> item.getAgentCode() + "-" + item.getField5()));
         int i = 0;
         for (Map.Entry<String, List<BootDataReadUKnown>> entry : agentMonthMap.entrySet()) {

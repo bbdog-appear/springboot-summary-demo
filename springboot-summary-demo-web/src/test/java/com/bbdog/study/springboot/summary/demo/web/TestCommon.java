@@ -101,6 +101,9 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
      * 然后直接读取Excel的值。这种情况是需要知道关键字段的位置的。所以将关键字段约定好放在Excel的前几行，那么Model中就可以
      * 定义前几个字段，对其进行校验。
      * 但是到时候写出的时候，由于其他字段的名字未知，所以在读的时候，需要获取文件表头字段，然后一一对应下来。
+     * 1、再测一下10条写出一次，那么invoke中写了一次，然后最后又写了一次，会不会重复。答案：不会重复，因为有一个list.clear()方法，
+     * invoke中执行完，就会清掉这个list，然后再最后执行的时候，那个数据已经没了。这一步骤很重要。
+     * 2、给各个方法添加注释
      */
     @Test
     public void testEasyExcelReadUKnownField(){
