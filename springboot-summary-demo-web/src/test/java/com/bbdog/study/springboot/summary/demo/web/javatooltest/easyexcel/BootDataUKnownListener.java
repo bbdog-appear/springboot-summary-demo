@@ -6,6 +6,7 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.excel.write.metadata.WriteSheet;
+import com.alibaba.excel.write.style.column.SimpleColumnWidthStyleStrategy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
@@ -87,7 +88,8 @@ public class BootDataUKnownListener extends AnalysisEventListener<BootDataReadUK
                 list.add(entry.getValue());
                 wrapperList.add(list);
             }
-            writer = EasyExcel.write("D:\\副本444cba.xlsx").needHead(true).head(wrapperList).excelType(ExcelTypeEnum.XLSX).build();
+            writer = EasyExcel.write("D:\\副本444cba.xlsx").needHead(true).head(wrapperList).
+                    registerWriteHandler(new SimpleColumnWidthStyleStrategy(30)).excelType(ExcelTypeEnum.XLSX).build();
             consoleFileFlag = false;
         }
 
@@ -158,7 +160,8 @@ public class BootDataUKnownListener extends AnalysisEventListener<BootDataReadUK
             // 移除最后一个元素，即把备注这个表头字段去掉
             wrapperList.remove(headMap.size() - 1);
             // 循环创建切分的Excel表头
-            ExcelWriter writer = EasyExcel.write("D:\\副本444cba"+i+".xlsx").needHead(true).head(wrapperList).excelType(ExcelTypeEnum.XLSX).build();
+            ExcelWriter writer = EasyExcel.write("D:\\副本444cba"+i+".xlsx").needHead(true).head(wrapperList).
+                    registerWriteHandler(new SimpleColumnWidthStyleStrategy(30)).excelType(ExcelTypeEnum.XLSX).build();
             writer.write(entry.getValue(), new WriteSheet());
             writer.finish();
         }
