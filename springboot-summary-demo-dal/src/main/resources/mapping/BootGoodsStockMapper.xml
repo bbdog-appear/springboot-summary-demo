@@ -26,6 +26,8 @@
         values
         (#{goodsCode,jdbcType=VARCHAR},#{goodsName,jdbcType=VARCHAR},#{goodsPrice,jdbcType=INTEGER},
          #{goodsTotalNum,jdbcType=INTEGER},#{goodsRemainNum,jdbcType=INTEGER})
+        ON DUPLICATE KEY UPDATE
+        goods_code = #{goodsCode,jdbcType=VARCHAR}
     </insert>
 
 </mapper>
