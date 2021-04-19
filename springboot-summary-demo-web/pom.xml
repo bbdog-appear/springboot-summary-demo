@@ -49,6 +49,7 @@
                     <configurationFile>
                         src/main/resources/mybatis-generator/generator-config.xml
                     </configurationFile>
+                    <!-- 允许覆盖生成的文件 -->
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
                 </configuration>
