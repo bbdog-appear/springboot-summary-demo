@@ -2,6 +2,7 @@
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<!-- 注意！！！！：用这个生成的文件，开始在idea中看不到，没有被git管理。解决方法：右击主项目点击reload from desk就可以把文件夹里的文件给加载出来  -->
 <generatorConfiguration>
     <!-- 1、id="mysql"：随便填，保证多个 context id 不重复就行
          2、targetRuntime="MyBatis3Simple":生成简单版的CRUD MyBatis3:豪华版
@@ -13,7 +14,7 @@
         <!-- 是否使用bigDecimal，false可自动转化以下类型（Long, Integer, Short, etc.） -->
         <javaTypeResolver><property name="forceBigDecimals" value="false"/></javaTypeResolver>
         <javaModelGenerator targetPackage="com.bbdog.study.springboot.summary.demo.dal.models" targetProject="src/main/java"/>
-        <!-- 注意：context里的标签顺序千万不能变，就按照这个顺序 -->
+        <!-- 注意：context里的标签顺序千万不能变，就按照这个顺序:(property*,plugin*,commentGenerator?,(connectionFactory|jdbcConnection),javaTypeResolver?,javaModelGenerator,sqlMapGenerator?,javaClientGenerator?,table+) -->
         <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources"/>
         <javaClientGenerator targetPackage="com.bbdog.study.springboot.summary.demo.dal.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
 
