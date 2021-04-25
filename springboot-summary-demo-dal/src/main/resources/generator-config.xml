@@ -1,31 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration
-        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 2.0//EN"
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
-    <classPathEntry location="D:\wangcheng\gongju\maven\apache-maven-3.6.3\repository\mysql\mysql-connector-java\8.0.19\mysql-connector-java-8.0.19.jar"/>
     <!-- 1、id="mysql"：随便填，保证多个 context id 不重复就行
          2、targetRuntime="MyBatis3Simple":生成简单版的CRUD MyBatis3:豪华版
          3、defaultModelType="flat"：可以不填，默认值 conditional，flat表示一张表对应一个po-->
-    <context id="mysql" targetRuntime="MyBatis3" defaultModelType="flat">
+    <context id="default" targetRuntime="MyBatis3">
         <!-- 是否去除自动生成的注释 true：是；false:否 -->
         <commentGenerator><property name="suppressAllComments" value="true"/></commentGenerator>
-        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/test?useUnicode=true" userId="wangcheng" password="wangcheng" driverClass="com.mysql.cj.jdbc.Driver">
-            <!--高版本的 mysql-connector-java 需要设置 nullCatalogMeansCurrent=true-->
-            <property name="nullCatalogMeansCurrent" value="true"/>
-        </jdbcConnection>
+        <jdbcConnection connectionURL="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=CTT" userId="wangcheng" password="wangcheng" driverClass="com.mysql.cj.jdbc.Driver"/>
         <!-- 是否使用bigDecimal，false可自动转化以下类型（Long, Integer, Short, etc.） -->
         <javaTypeResolver><property name="forceBigDecimals" value="false"/></javaTypeResolver>
         <javaModelGenerator targetPackage="com.bbdog.study.springboot.summary.demo.dal.models" targetProject="src/main/java"/>
-        <javaClientGenerator targetPackage="com.bbdog.study.springboot.summary.demo.dal.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
+        <!-- 注意：context里的标签顺序千万不能变，就按照这个顺序 -->
         <sqlMapGenerator targetPackage="mapping" targetProject="src/main/resources"/>
+        <javaClientGenerator targetPackage="com.bbdog.study.springboot.summary.demo.dal.mapper" targetProject="src/main/java" type="XMLMAPPER"/>
 
         <!-- enableXXXByExample 默认为 true，为 true 会生成一个对应Example帮助类，帮助你进行条件查询，不想要可以设为false -->
         <table tableName="boot_mybatis_generator" domainObjectName="BootMybatisGeneratorDO"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
-            <generatedKey column="id" sqlStatement="MySql" identity="true" />
         </table>
 
     </context>
