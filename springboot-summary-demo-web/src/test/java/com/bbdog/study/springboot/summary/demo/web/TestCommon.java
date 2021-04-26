@@ -7,6 +7,7 @@ import com.alibaba.excel.read.metadata.ReadSheet;
 import com.alibaba.excel.write.metadata.WriteSheet;
 import com.bbdog.study.springboot.summary.demo.api.BootCommonConfigService;
 import com.bbdog.study.springboot.summary.demo.service.BootCommonConfigServiceImpl;
+import com.bbdog.study.springboot.summary.demo.web.designpatterns.factorymode.FactoryModeService;
 import com.bbdog.study.springboot.summary.demo.web.javatooltest.easyexcel.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -31,6 +32,8 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
 
     @Autowired
     private ApplicationContext context;
+    @Autowired
+    private FactoryModeService factoryModeService;
 
     /**
      * 测试Spring上下文获取同一类型的bean，实例是否一样。结论：都是相同的对象
@@ -121,6 +124,14 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
         Integer total = listener.getHandleResultCount().getTotal();
         Integer success = listener.getHandleResultCount().getSuccess();
         log.info("总条数：{}，成功条数：{}", total, success);
+    }
+
+    @Test
+    public void testFactoryMode(){
+        factoryModeService.sendReward("coupon");
+        factoryModeService.sendReward("goods");
+        factoryModeService.sendReward("card");
+        System.out.println("============结束");
     }
 
 }
