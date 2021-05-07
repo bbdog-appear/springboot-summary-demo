@@ -14,6 +14,9 @@ public class TestPerson {
         System.out.println("测试静态代码块");
     }
 
+    /**
+     * 第一次new TestPerson()，会加载这个对象。第二次new TestPerson()，就不会再加载一次了，因为是static修饰，只会加载一次。
+     */
     private static TestHair testHair = new TestHair();
 
     private TestNose testNose = new TestNose();

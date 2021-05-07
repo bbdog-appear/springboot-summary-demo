@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p>
- *      工厂模式调用Service类
+ *      工厂模式调用Service类(其实定义一个接口统一入参的这种模式也叫适配器模式)
  *      1、如果这里不用枚举去获取真正的业务类，那么这里需要用if else判断是哪种类型，然后去new一个真正的业务对象去调用factoryModeBiz#sendReward方法
  *      2、通过枚举只是获取到Class对象，那么可以通过spring去拿到容器中的业务bean。
  *      BootInterface<?, ?> bootInterface = (BootInterface<?, ?>) applicationContext.getBean(rewardTypeClass);

@@ -24,6 +24,10 @@
             <!-- 表示在什么时候需要使用到该依赖，并会影响传递依赖 -->
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.alibaba</groupId>
