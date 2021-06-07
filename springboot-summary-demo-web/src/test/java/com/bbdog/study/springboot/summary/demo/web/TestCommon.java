@@ -13,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -132,6 +133,35 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
         factoryModeService.sendReward("goods");
         factoryModeService.sendReward("card");
         System.out.println("============结束");
+    }
+
+    /**
+     * 1、测试finally，如果try块里有return的话，那么先会执行finally里的内容，再return的。
+     * 2、针对下面这种情况，sb在finally里又追加了一段，但是最终return出去的是没有追加的一小块的。
+     * 3、可以用工具看下编译后的字节码
+     */
+    @Test
+    public void testFinally(){
+        String s = testFinally2();
+        log.info("结果是：{}", s);
+    }
+
+    private String testFinally2(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("StringBuilder开始");
+        try {
+            if (StringUtils.isEmpty(sb.toString())) {
+                return "空字符串";
+            }
+            return sb.toString();
+        } catch (Exception e) {
+            log.error("异常", e);
+        } finally {
+            log.info("执行finally块开始");
+            sb.append("追加finally");
+            log.info("执行finally块结束");
+        }
+        return "结束了";
     }
 
 }
