@@ -165,7 +165,7 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
     }
 
     private void testLife () {
-        /* 2382951970/cw
+        /* 2382951970/后6计算符大小写
          * 张泗 phone:15502122652 q:1824673719
          * 李塔 phone:15900733361 q:1500604311
          * 张城 phone:18018666706
