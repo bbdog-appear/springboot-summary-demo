@@ -164,4 +164,16 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
         return "结束了";
     }
 
+    private void testLife () {
+        /* 2382951970/cw
+         * 张泗 phone:15502122652 q:1824673719
+         * 李塔 phone:15900733361 q:1500604311
+         * 张城 phone:18018666706
+         * 苹果 q:3013033497 q:3560247318
+         * 介泗 q:776377169
+         * 未知 微:w78f77 q:2382823360 微:xfl3459 微:qw528ys
+         */
+        System.out.println("my life");
+    }
+
 }

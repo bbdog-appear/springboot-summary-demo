@@ -17,7 +17,8 @@ public class TestByteCode {
      * @param args 入参
      */
     public static void main(String[] args) {
-        testFinally2();
+//        testFinally2();
+        test();
     }
 
     /**
@@ -36,6 +37,17 @@ public class TestByteCode {
         } finally {
             sb.append("1");
         }
+    }
+
+    private static void test() {
+        String a = "I am ";
+        String b = "cheng";
+        String c = a + b;
+        String d = "I am " + "cheng";
+        System.out.println(c == d);
+        Integer i = 100;
+        int j = i;
+        System.out.println(i == j);
     }
 
 }
