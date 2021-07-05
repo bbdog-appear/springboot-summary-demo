@@ -174,6 +174,10 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
          * 未知 微:w78f77 q:2382823360 微:xfl3459 微:qw528ys
          */
         System.out.println("my life");
+        /*
+        * 微 WaCY52_940
+        *  */
+        System.out.println("w life");
     }
 
 }
