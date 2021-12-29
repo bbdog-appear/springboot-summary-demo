@@ -181,4 +181,11 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
         System.out.println("w life");
     }
 
+    public static void main(String[] args) {
+        String s1 = "20211112";
+        String s2 = null;
+        String s3 = s1 + s2;
+        System.out.println(s3);
+    }
+
 }
