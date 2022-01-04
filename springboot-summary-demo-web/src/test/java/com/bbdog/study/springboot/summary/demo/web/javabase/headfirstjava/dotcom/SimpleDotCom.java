@@ -4,7 +4,9 @@ import lombok.Data;
 
 /**
  * <p>
- *      模拟攻击网站小游戏
+ *      模拟攻击网站小游戏(猜测位置打掉计算机所安排的达康公司 dot com网站)
+ *      1、但是这个checkYourself有个小bug，就是玩家三次猜的同一个位置，都会击中。所以需要改进一下：
+ *      判别之前是否已经被猜中。
  * </p>
  *
  * @author cheng.wang
@@ -24,10 +26,12 @@ public class SimpleDotCom {
 
     /**
      * 伪代码
+     * 该方法需要被优化。方法名就暂时改为Deprecated
      *
      * @param guess 校验结果
      * @return 结果
      */
+    @Deprecated
     public String checkYourself(String guess) {
         int intGuess = Integer.parseInt(guess);
         String result = "miss";
