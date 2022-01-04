@@ -1,4 +1,4 @@
-package com.bbdog.study.springboot.summary.demo.web.javabase.dotcom;
+package com.bbdog.study.springboot.summary.demo.web.javabase.headfirstjava.dotcom;
 
 /**
  * <p>
