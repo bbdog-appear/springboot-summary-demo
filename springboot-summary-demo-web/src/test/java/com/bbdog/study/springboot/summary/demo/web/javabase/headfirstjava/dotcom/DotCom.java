@@ -23,6 +23,10 @@ public class DotCom {
      * 代表DotCom占据的位置
      */
     private ArrayList<String> locationCells;
+    /**
+     * DotCom的名称
+     */
+    private String name;
 
     /**
      * 猜测格子位置并返回结果
@@ -42,6 +46,7 @@ public class DotCom {
             // 如果此列表不包含任何元素，则返回 <tt>true<tt>
             if (locationCells.isEmpty()) {
                 result = "kill";
+                System.out.println("Ouch! You sunk " + name + " : (");
             }
         }
         return result;
