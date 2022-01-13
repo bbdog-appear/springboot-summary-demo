@@ -11,7 +11,11 @@ package com.bbdog.study.springboot.summary.demo.web.javabase.headfirstjava.构�
 public abstract class Animal {
 
     public Animal(String str) {
-        System.out.println("父类构造函数~~");
+        System.out.println("父类有参构造函数~~");
+    }
+
+    public Animal() {
+        System.out.println("父类无参构造函数~~");
     }
 
     public abstract void run();

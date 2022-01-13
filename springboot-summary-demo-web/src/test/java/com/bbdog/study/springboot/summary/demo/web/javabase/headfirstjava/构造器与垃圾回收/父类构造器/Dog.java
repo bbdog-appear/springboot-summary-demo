@@ -11,8 +11,14 @@ package com.bbdog.study.springboot.summary.demo.web.javabase.headfirstjava.构�
 public class Dog extends Animal{
 
     public Dog() {
-        super("");
-        System.out.println("狗的构造函数");
+//        super();
+        this("二哈");
+        System.out.println("狗的无参构造函数");
+    }
+
+    public Dog(String name) {
+//        super(name);
+        System.out.println("狗的有参构造函数");
     }
 
     @Override
