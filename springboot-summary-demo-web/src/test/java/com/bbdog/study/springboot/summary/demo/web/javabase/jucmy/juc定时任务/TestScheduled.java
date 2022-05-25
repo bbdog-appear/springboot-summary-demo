@@ -3,12 +3,12 @@ package com.bbdog.study.springboot.summary.demo.web.javabase.jucmy.juc定时任�
 import lombok.extern.slf4j.Slf4j;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * <p>
@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 public class TestScheduled {
 
     private static final ScheduledExecutorService service = Executors.newScheduledThreadPool(1);
+    private static boolean runFlag = true;
 
     /**
      * 简单定时任务测试
@@ -73,8 +74,78 @@ public class TestScheduled {
         System.out.println("结束，" + str + "，时间" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     }
 
+    public static void testScheduled3() {
+        AtomicInteger countNum = new AtomicInteger();
+        System.out.println("开始，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        service.scheduleAtFixedRate(() -> {
+            if (runFlag) {
+                System.out.println("开始执行任务，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("本次任务执行结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                if (countNum.getAndIncrement() >= 5) {
+                    runFlag = false;
+                    System.out.println("标识变为false");
+                    service.shutdown();
+                    System.out.println("结束调度任务");
+                }
+            }
+        }, 2, 5, TimeUnit.SECONDS);
+        System.out.println("结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    }
+
+    public static void testScheduled4() {
+        AtomicInteger countNum = new AtomicInteger();
+        System.out.println("开始，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        ScheduledFuture<?> future = service.scheduleAtFixedRate(() -> {
+            if (runFlag) {
+                System.out.println("开始执行任务，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("本次任务执行结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                if (countNum.getAndIncrement() >= 5) {
+                    runFlag = false;
+                    System.out.println("标识变为false");
+                }
+            }
+        }, 2, 5, TimeUnit.SECONDS);
+        if (!runFlag) {
+            future.cancel(true);
+        }
+        System.out.println("结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    }
+
+    public static void testScheduled5() {
+        AtomicInteger countNum = new AtomicInteger();
+        System.out.println("开始，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        ScheduledFuture<?> future = service.scheduleAtFixedRate(() -> {
+            System.out.println("开始执行任务，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("本次任务执行结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            if (countNum.getAndIncrement() >= 4) {
+                runFlag = false;
+            }
+        }, 2, 3, TimeUnit.SECONDS);
+        // 这种不行，因为线程池执行是异步的，所以这里永远进不去，除非阻塞一下。
+        if (!runFlag) {
+            log.info("进入future.cancel");
+            future.cancel(true);
+        }
+        System.out.println("结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    }
+
     public static void main(String[] args) {
-        testScheduled2();
+        testScheduled5();
     }
 
 }
