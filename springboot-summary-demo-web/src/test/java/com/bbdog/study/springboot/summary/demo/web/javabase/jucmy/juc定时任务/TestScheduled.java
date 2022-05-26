@@ -80,6 +80,7 @@ public class TestScheduled {
         service.scheduleAtFixedRate(() -> {
             if (runFlag) {
                 System.out.println("开始执行任务，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                System.out.println("countNum：" + countNum.get());
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException e) {
@@ -89,8 +90,8 @@ public class TestScheduled {
                 if (countNum.getAndIncrement() >= 5) {
                     runFlag = false;
                     System.out.println("标识变为false");
-                    service.shutdown();
-                    System.out.println("结束调度任务");
+//                    service.shutdown();
+//                    System.out.println("结束调度任务");
                 }
             }
         }, 2, 5, TimeUnit.SECONDS);
@@ -144,8 +145,51 @@ public class TestScheduled {
         System.out.println("结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
     }
 
+    /**
+     * 测试同一个Thread对象，当每次轮询调用该对象的run方法时，该对象的实例变量肯定是同步变的
+     * 比如第一次轮询 countNum是0，第二次轮询，再执行run方法，此时还是同一个对象，所以countNum变为1了。同样runFlagNew也会改变的。
+     */
+    public void testScheduled6() {
+        System.out.println("开始，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        ScheduleThread sThread = new ScheduleThread(new AtomicInteger(), true);
+        service.scheduleAtFixedRate(sThread, 1, 15, TimeUnit.SECONDS);
+        System.out.println("结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+    }
+
+    class ScheduleThread implements Runnable {
+
+        private final AtomicInteger countNum;
+        private boolean runFlagNew;
+
+        public ScheduleThread(AtomicInteger countNum, boolean runFlagNew) {
+            this.countNum = countNum;
+            this.runFlagNew = runFlagNew;
+        }
+
+        @Override
+        public void run() {
+            if (runFlagNew) {
+                System.out.println("开始执行任务，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                System.out.println("countNum：" + countNum.get());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("本次任务执行结束，时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+                // getAndIncrement是返回旧值，incrementAndGet是返回新值。
+                if (countNum.getAndIncrement() >= 3) {
+                    runFlagNew = false;
+                    System.out.println("标识变为false");
+                }
+            }
+            System.out.println("跳出循环");
+        }
+    }
+
     public static void main(String[] args) {
-        testScheduled5();
+        TestScheduled t = new TestScheduled();
+        t.testScheduled6();
     }
 
 }
