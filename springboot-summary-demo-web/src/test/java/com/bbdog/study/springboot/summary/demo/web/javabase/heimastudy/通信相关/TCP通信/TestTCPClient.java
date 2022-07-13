@@ -31,7 +31,7 @@ public class TestTCPClient {
         // 即还是执行上面的那个对象的方法，最终会把数据流向socket管道
         PrintStream ps = new PrintStream(os);
         // 4、开始发消息出去
-        ps.print("我是客户端，我发送一条消息：今晚打老虎");
+        ps.println("我是客户端，我发送一条消息：今晚打老虎");
         ps.flush();
         System.out.println("客户端发送完毕");
     }
