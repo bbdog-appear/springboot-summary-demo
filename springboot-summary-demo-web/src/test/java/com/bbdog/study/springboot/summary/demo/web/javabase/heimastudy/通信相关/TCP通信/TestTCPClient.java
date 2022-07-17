@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Scanner;
 
 /**
  * <p>
@@ -30,10 +31,13 @@ public class TestTCPClient {
         // 3、把低级流的字节输出流包装成高级的打印流，这里把上面的os对象即低级的字节输出流包装一下，ps执行时，实际上就是执行os对象里的方法，
         // 即还是执行上面的那个对象的方法，最终会把数据流向socket管道
         PrintStream ps = new PrintStream(os);
-        // 4、开始发消息出去
-        ps.println("我是客户端，我发送一条消息：今晚打老虎");
-        ps.flush();
-        System.out.println("客户端发送完毕");
+        // 4、改为循环的发送消息出去
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("请说：");
+            ps.println(scanner.nextLine());
+            ps.flush();
+        }
     }
 
 }
