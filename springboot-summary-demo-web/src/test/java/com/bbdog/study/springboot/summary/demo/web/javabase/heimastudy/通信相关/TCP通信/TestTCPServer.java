@@ -3,6 +3,9 @@ package com.bbdog.study.springboot.summary.demo.web.javabase.heimastudy.通信�
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * <p>
@@ -19,12 +22,20 @@ import java.net.Socket;
  *      4、改为循环发消息的方式，但是这种情况下，服务端只能接收一个客户端请求，即再启动一个客户端，发消息时，服务端接收不到消息的，原因是服务端的
  *      main方法Socket socket = ss.accept();在第一次客户端连接后就以后往后面执行了，第二个客户端建立socket连接时，这里1、2代码都不会跑到的
  *      5、再改为服务端可以接收多个客户端请求，即每来一个客户端请求，服务端这边开启一个线程执行，并发执行互不影响。
+ *      6、再改为通过线程池的方式接收多个客户端的请求。可以看到如果核心线程数是3，那么当三个客户端连接后，第四个客户端再连接时，已经没有足够的线程
+ *      去处理该任务了，所以就把该任务放到线程池的等待队列里。因为前三个客户端是长连接，所以线程一直没有被释放。所以第四个客户端的请求一直不会被执行，
+ *      除非其中有个客户端挂了，那么对于服务端的线程也就跑完了，线程又放回到线程池中，这时该线程就会立马执行等待队列里的任务。劣势一看便知，并发处理的
+ *      线程是收到限制的，所以线程池是适合短连接的，这种socket连接做聊天的话，是长连接，线程可能不会立即释放掉。其中12306大概就是用线程池做的，
+ *      100个人过来抢票，其中只有50个核心线程可以处理任务，另外50个任务是放在等待队列里的，当前面的线程执行完任务(抢到票了)，那么就有线程来执行
+ *      等待队列里的任务了，也就是做到了排队购票。
  * </p>
  *
  * @author cheng.wang
  * @version Id：TestTCPServer.java Date：2022/7/13/013 23:52 Version：1.0
  */
 public class TestTCPServer {
+
+    private static final ExecutorService executor = Executors.newFixedThreadPool(3);
 
     public static void main(String[] args) throws Exception {
         System.out.println("服务端启动");
@@ -36,8 +47,10 @@ public class TestTCPServer {
             // 如果客户端那边还没有请求该服务端的ip和端口，这边会一直等待，即无socket管道请求时，这里会阻塞
             Socket socket = ss.accept();
 
-            // 7、每接收一个客户端socket通信管道的连接请求，就开启一个线程执行
-            new ServerReadThread(socket).start();
+            System.out.println("客户端" + socket.getRemoteSocketAddress() + "已连接~~");
+
+            // 7、每接收一个客户端socket通信管道的连接请求，就开启一个线程执行，现改为线程池的方式处理任务
+            executor.execute(new ServerReadThread(socket));
         }
     }
 
