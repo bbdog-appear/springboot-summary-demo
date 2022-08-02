@@ -16,7 +16,7 @@ public class Solution {
             return false;
         }
         // 个位为0的，不可能是回文数，因为首位不可能是0，即没有012210这样的数
-        if (x % 10 == 0) {
+        if (x % 10 == 0 && x != 0) {
             return false;
         }
         int right = 0;
