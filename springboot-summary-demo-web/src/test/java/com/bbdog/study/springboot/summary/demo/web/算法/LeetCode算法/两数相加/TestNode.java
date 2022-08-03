@@ -1,4 +1,4 @@
-package com.bbdog.study.springboot.summary.demo.web.算法.LeetCode算法.算法1;
+package com.bbdog.study.springboot.summary.demo.web.算法.LeetCode算法.两数相加;
 
 /**
  * <p>
