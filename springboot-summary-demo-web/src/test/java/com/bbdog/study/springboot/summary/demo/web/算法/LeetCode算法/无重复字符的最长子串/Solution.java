@@ -1,6 +1,9 @@
 package com.bbdog.study.springboot.summary.demo.web.算法.LeetCode算法.无重复字符的最长子串;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * <p>
  *      无重复字符的最长子串
@@ -28,22 +31,27 @@ package com.bbdog.study.springboot.summary.demo.web.算法.LeetCode算法.无重
  */
 public class Solution {
 
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+        int i = solution.lengthOfLongestSubstring("s");
+    }
+
     public int lengthOfLongestSubstring(String s) {
         int finalMaxLength = 0;
+        List<Character> list = new ArrayList<>();
         for (int i = 0; i < s.length(); i++) {
-            char c1 = s.charAt(i);
-            int maxLength = 0;
-            // 这种不行，因为abcabcbb，如果到第4个位置，也就是a的时候，a和后面的b c b b比较都不相同，长度增加了，但是这种不符合需求。
+            list.clear();
+            list.add(s.charAt(i));
             // 需要把刚才最长长度对应的字符串的每一个字符和后面比较，即a b c字符中b和后面一个b相同，那么abc就是最长长度
             for (int j = i + 1; j < s.length(); j++) {
-                maxLength = maxLength + 1;
-                char c2 = s.charAt(j);
-                if (c1 == c2) {
+                char c = s.charAt(j);
+                if (list.contains(c)) {
                     break;
                 }
+                list.add(c);
             }
             // 每次内部循环计算的字符串长度取最大值
-            finalMaxLength = Math.max(finalMaxLength, maxLength);
+            finalMaxLength = Math.max(finalMaxLength, list.size());
         }
         return finalMaxLength;
     }
