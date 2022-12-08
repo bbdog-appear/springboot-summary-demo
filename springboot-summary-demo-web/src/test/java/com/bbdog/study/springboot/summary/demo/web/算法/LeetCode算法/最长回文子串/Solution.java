@@ -24,7 +24,7 @@ package com.bbdog.study.springboot.summary.demo.web.算法.LeetCode算法.最长
 public class Solution {
 
     public static void main(String[] args) {
-        String s = new Solution().longestPalindrome("babad");
+        String s = new Solution().longestPalindrome("a");
         System.out.println(s);
     }
 
@@ -34,33 +34,34 @@ public class Solution {
      * 2、使用两个指针遍历两个字符串，移动指针，将相同字符拼接成字符串，直到字符不相同时停止遍历，
      * 该字符串就是回文数
      *
+     * 上面思路不对，换种思路：
+     * 直接列举所有的子串，将最长的回文数子串取出。
+     *
      * @param s 字符串
      * @return 回文数子串
      */
     public String longestPalindrome(String s) {
-        // 字符长度为1时，该字符串就是回文字符。
-        if (s.length() == 1) {
-            return s;
-        }
-        char[] reverseChar = new char[s.length()];
-        int j = s.length()-1;
+        // 列举所有子串
+        int max = 0;
+        String result = null;
         for (int i = 0; i < s.length(); i++) {
-            reverseChar[j--] = s.charAt(i);
-        }
-        int k = 0;
-        StringBuilder result = new StringBuilder();
-        boolean flag = false;
-        while (k < s.length()) {
-            if (s.charAt(k) == reverseChar[k]) {
-                result.append(s.charAt(k));
-                flag = true;
+            for (int j = i + 1; j <= s.length(); j++) {
+                String str = s.substring(i, j);
+                boolean flag = true;
+                for (int k = 0; k < str.length() / 2; k++) {
+                    if (str.charAt(k) != str.charAt(str.length() - k - 1)) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag && str.length() > max) {
+                    // 将字符串存下来，并记录长度
+                    result = str;
+                    max = str.length();
+                }
             }
-            if (flag && s.charAt(k) != reverseChar[k]) {
-                break;
-            }
-            k++;
         }
-        return result.toString();
+        return result;
     }
 
 }
