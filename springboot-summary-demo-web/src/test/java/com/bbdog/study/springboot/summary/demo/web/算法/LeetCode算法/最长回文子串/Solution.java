@@ -37,31 +37,38 @@ public class Solution {
      * 上面思路不对，换种思路：
      * 直接列举所有的子串，将最长的回文数子串取出。
      *
+     * 最终还是看着题解写的暴力解法，用了三次循环遍历，时间复杂度O(n^3)，空间复杂度O(1)
+     *
      * @param s 字符串
      * @return 回文数子串
      */
     public String longestPalindrome(String s) {
-        // 列举所有子串
+        if (s.length() < 2) {
+            return s;
+        }
         int max = 0;
-        String result = null;
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i + 1; j <= s.length(); j++) {
-                String str = s.substring(i, j);
-                boolean flag = true;
-                for (int k = 0; k < str.length() / 2; k++) {
-                    if (str.charAt(k) != str.charAt(str.length() - k - 1)) {
-                        flag = false;
-                        break;
-                    }
-                }
-                if (flag && str.length() > max) {
-                    // 将字符串存下来，并记录长度
-                    result = str;
-                    max = str.length();
+        int first = 0;
+        int last = 1;
+        char[] chars = s.toCharArray();
+        for (int i = 0; i < s.length() - 1; i++) {
+            for (int j = i + 1; j < s.length(); j++) {
+                if (validFlag(chars, i, j) && j - i + 1 > max) {
+                    max = j - i + 1;
+                    first = i;
+                    last = j + 1;
                 }
             }
         }
-        return result;
+        return s.substring(first, last);
+    }
+
+    private boolean validFlag(char[] chars, int left, int right) {
+        while (left < right) {
+            if (chars[left++] != chars[right--]) {
+                return false;
+            }
+        }
+        return true;
     }
 
 }
