@@ -51,13 +51,20 @@ public class Solution {
      * 如果numRows为3，则公式除了第n+=4，其他都可以套用n/2
      *
      * 自己想的是二维数组，但是太复杂，还写不出来。然后看的题解，发现那些人是真牛逼
-     * 用一个flag来往返移动
+     * 用一个flag来往返移动，即flag=-flag，在达到Z字形转折点时，执行反向。
+     * 即flag就像一面墙，每次走到上下两边，就反过来走。
+     *
+     * 因为就循环遍历了一次s，时间复杂度O(n)
+     * 使用了list列表，即各行字符串，空间复杂度O(N)
      *
      * @param s 字符串
      * @param numRows 行数
      * @return 转换后字符串
      */
     public String convert(String s, int numRows) {
+        if (numRows < 2) {
+            return s;
+        }
         // 定义一个List的StringBuilder，用来间接表示二维数组
         List<StringBuilder> resultList = new ArrayList<>();
         for (int i = 0; i < numRows; i++) {
