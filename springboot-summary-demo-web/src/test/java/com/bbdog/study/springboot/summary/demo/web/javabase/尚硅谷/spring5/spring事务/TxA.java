@@ -1,4 +1,4 @@
-package com.bbdog.study.springboot.summary.demo.web.javabase.尚硅谷.spring5;
+package com.bbdog.study.springboot.summary.demo.web.javabase.尚硅谷.spring5.spring事务;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

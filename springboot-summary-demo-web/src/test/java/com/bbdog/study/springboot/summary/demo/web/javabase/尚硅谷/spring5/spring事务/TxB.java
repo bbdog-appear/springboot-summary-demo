@@ -1,6 +1,5 @@
-package com.bbdog.study.springboot.summary.demo.web.javabase.尚硅谷.spring5;
+package com.bbdog.study.springboot.summary.demo.web.javabase.尚硅谷.spring5.spring事务;
 
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
