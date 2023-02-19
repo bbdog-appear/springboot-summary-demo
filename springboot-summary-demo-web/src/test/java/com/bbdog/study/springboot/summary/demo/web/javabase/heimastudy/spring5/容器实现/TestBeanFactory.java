@@ -3,6 +3,7 @@ package com.bbdog.study.springboot.summary.demo.web.javabase.heimastudy.spring5.
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
@@ -12,12 +13,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.expression.BeanFactoryAccessor;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 import java.util.Map;
 
 /**
  * <p>
- *
+ *      测试BeanFactory的实现，即beanFactory对象属性的初始化是如何进行的。
  * </p>
  *
  * @author cheng.wang
@@ -84,6 +86,22 @@ public class TestBeanFactory {
             System.out.println(beanDefinitionName);
         }
 
+        /* 上面的只是BeanFactory后处理器，但是像@Autowired、@Resource这样的注解它还是解析不了，需要internalAutowiredAnnotationProcessor
+        和internalCommonAnnotationProcessor这样的bean后处理器，主要就是解析这样的注解，然后拿到容器中的bean，并注入到属性中的。即当进入到
+        bean的生命周期里时，即当调用getBean时，那么加载到该bean中的属性时，然后检测到@Autowired注解时，就会触发那个bean处理器，将属性注入。
+        其实依赖注入的功能其实也是BeanFactory的扩展功能，bean后处理器是针对每个bean的生命周期，即bean的创建，依赖注入，初始化，bean后处理器
+        可以提供一些扩展功能
+        */
+        // 这里是通过类名，即这些bean处理器的接口名获取所有bean处理器的实现类，注册(初始化这些bean处理器)放入容器中，这时还没调用bean处理器
+        // 的方法，只是先实例化，后面进入bean生命周期里才会调用。
+        Collection<BeanPostProcessor> values1 = beanFactory.getBeansOfType(BeanPostProcessor.class).values();
+        // 将bean处理器对象放入BeanFactory里
+        for (BeanPostProcessor beanPostProcessor : values1) {
+            beanFactory.addBeanPostProcessor(beanPostProcessor);
+        }
+        // 这时候getBean的时候，就会自动注入属性
+        Bean2 bean2 = beanFactory.getBean(Bean1.class).getBean2();
+        System.out.println(bean2);
     }
 
     @Configuration
@@ -103,6 +121,7 @@ public class TestBeanFactory {
 
     static class Bean1 {
 
+        @Resource
         @Autowired
         private Bean2 bean2;
 
