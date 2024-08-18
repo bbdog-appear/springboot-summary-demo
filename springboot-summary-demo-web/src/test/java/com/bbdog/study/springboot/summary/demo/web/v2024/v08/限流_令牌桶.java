@@ -13,6 +13,11 @@ public class 限流_令牌桶 extends SpringbootSummaryDemoWebApplication {
      */
     private RateLimiter rateLimiter = RateLimiter.create(5);
 
+    /**
+     * 测试令牌桶算法-guava-rateLimiter
+     *
+     * @throws Exception 异常
+     */
     @Test
     public void testRateLimiter() throws Exception {
         // 突发流量进来后，获取桶中的令牌，获取到执行业务逻辑，获取不到返回限流信息
