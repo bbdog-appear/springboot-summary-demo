@@ -4,13 +4,17 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * 容器类
- * 注解：ComponentScan、Component、Scope
+ * 1.注解：ComponentScan、Component、Scope
+ * 2.BeanPostProcessor接口：初始化之前、初始化之后、销毁之前、销毁之后
+ * 3.容器中会缓存beanDefinition对象、beanPostProcessor对象、单例池对象
  */
 public class MineApplicationContext {
 
@@ -23,6 +27,11 @@ public class MineApplicationContext {
      * 将beanDefinition对象缓存起来
      */
     private ConcurrentHashMap<String, BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+    /**
+     * 将beanPostProcessor对象缓存起来
+     */
+    private List<BeanPostProcessor> beanPostProcessors = new CopyOnWriteArrayList<>();
+
 
     public MineApplicationContext(Class<?> configClass) {
         this.configClass = configClass;
@@ -72,11 +81,21 @@ public class MineApplicationContext {
                 ((BeanNameAware) instance).setBeanName(beanName);
             }
 
+            // 初始化前
+            for (BeanPostProcessor beanPostProcessor : beanPostProcessors) {
+                // 传入的bean实例对象和返回的对象不一定是同一个对象
+                instance = beanPostProcessor.postProcessBeforeInitialization(instance, beanName);
+            }
+
             // 初始化InitializingBean
             if (instance instanceof InitializingBean) {
                 ((InitializingBean) instance).afterPropertiesSet();
             }
 
+            // 初始化后
+            for (BeanPostProcessor beanPostProcessor : beanPostProcessors) {
+                instance = beanPostProcessor.postProcessAfterInitialization(instance, beanName);
+            }
 
 
             return instance;
@@ -125,6 +144,16 @@ public class MineApplicationContext {
                         Class<?> clazz = classLoader.loadClass(className);
 
                         if (clazz.isAnnotationPresent(Component.class)) {
+
+                            // 判断是BeanPostProcessor接口类型(此时还未生成bean对象，不能用instanceof)，使用isAssignableFrom当前的类class是否实现了该接口判断
+                            if (BeanPostProcessor.class.isAssignableFrom(clazz)) {
+                                // TODO: 2024/8/25/025 这里不严谨，应该用spring的getBean获取bean对象，但是在这里还没有实例化bean
+                                BeanPostProcessor beanPostProcessor = (BeanPostProcessor) clazz.getDeclaredConstructor().newInstance();
+                                // 将beanPostProcessor对象放入缓存
+                                beanPostProcessors.add(beanPostProcessor);
+                            }
+
+
                             // 获取bean的name或者说id
                             String beanName = clazz.getDeclaredAnnotation(Component.class).value();
 
