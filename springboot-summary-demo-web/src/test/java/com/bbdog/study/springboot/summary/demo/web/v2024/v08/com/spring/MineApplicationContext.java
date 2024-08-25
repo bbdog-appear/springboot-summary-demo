@@ -1,6 +1,7 @@
 package com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.spring;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class MineApplicationContext {
             BeanDefinition beanDefinition = entry.getValue();
             if ("singleton".equals(beanDefinition.getScope())) {
                 // 创建bean对象
-                singletonObjects.put(beanName, createBean(beanDefinition));
+                singletonObjects.put(beanName, createBean(beanName, beanDefinition));
             }
 
         }
@@ -42,16 +43,35 @@ public class MineApplicationContext {
     }
 
     /**
-     * 简单的创建bean过程
+     * 简单的创建bean过程(此时属性还未注入)
      * spring中的创建bean过程还有其他内容，后面再说
      *
      * @param beanDefinition bean定义对象
+     * @param beanName bean名称
      * @return bean对象
      */
-    public Object createBean(BeanDefinition beanDefinition) {
+    public Object createBean(String beanName, BeanDefinition beanDefinition) {
         Class<?> clazz = beanDefinition.getClazz();
         try {
-            return clazz.getDeclaredConstructor().newInstance();
+            // 这里只是创建对象，属性还未注入
+            Object instance = clazz.getDeclaredConstructor().newInstance();
+
+            // 依赖注入
+            for (Field declaredField : clazz.getDeclaredFields()) {
+                // 判断当前属性是否被Autowired注解
+                if (declaredField.isAnnotationPresent(Autowired.class)) {
+                    // 给当前对象的属性赋值
+                    declaredField.setAccessible(true);
+                    declaredField.set(instance, getBean(declaredField.getName()));
+                }
+            }
+
+            // 如果实现了BeanNameAware接口，则调用setBeanName方法
+            if (instance instanceof BeanNameAware) {
+                ((BeanNameAware) instance).setBeanName(beanName);
+            }
+
+            return instance;
         } catch (InstantiationException e) {
             e.printStackTrace();
         } catch (IllegalAccessException e) {
@@ -127,7 +147,7 @@ public class MineApplicationContext {
                 return singletonObjects.get(beanName);
             } else {
                 // 原型prototype bean，每次创建bean对象
-                return createBean(beanDefinition);
+                return createBean(beanName, beanDefinition);
             }
 
         } else {

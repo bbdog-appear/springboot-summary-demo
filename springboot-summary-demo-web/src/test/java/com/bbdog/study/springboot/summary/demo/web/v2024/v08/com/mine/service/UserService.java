@@ -1,14 +1,24 @@
 package com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.mine.service;
 
+import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.spring.Autowired;
+import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.spring.BeanNameAware;
 import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.spring.Component;
-import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.spring.Scope;
 
 @Component("userService")
-@Scope("prototype")
-public class UserService {
+public class UserService implements BeanNameAware {
 
-    public void register() {
-        System.out.println("UserService.register");
+    @Autowired
+    private OrderService orderService;
+    private String beanName;
+
+    public OrderService userOrderCreate() {
+        System.out.println("UserService.userOrderCreate,orderService:" + orderService + ",beanName:" + beanName);
+        return orderService;
+    }
+
+    @Override
+    public void setBeanName(String beanName) {
+        this.beanName = beanName;
     }
 
 }
