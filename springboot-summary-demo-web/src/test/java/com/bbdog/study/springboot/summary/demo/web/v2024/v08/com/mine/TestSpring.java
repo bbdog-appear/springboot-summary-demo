@@ -2,6 +2,7 @@ package com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.mine;
 
 import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.mine.service.BillingService;
 import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.mine.service.OrderService;
+import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.mine.service.PayService;
 import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.mine.service.UserService;
 import com.bbdog.study.springboot.summary.demo.web.v2024.v08.com.spring.MineApplicationContext;
 
@@ -15,7 +16,10 @@ public class TestSpring {
 //        testGetBean(context);
 
         // 2.测试自动注入
-        testAutowired(context);
+//        testAutowired(context);
+
+        // 3.测试AOP
+        testAop(context);
     }
 
     private static void testGetBean(MineApplicationContext context) {
@@ -35,6 +39,13 @@ public class TestSpring {
         UserService userService = (UserService) context.getBean("userService");
         OrderService orderService = userService.userOrderCreate();
         System.out.println(orderService);
+    }
+
+    private static void testAop(MineApplicationContext context) {
+        // 从容器中获取bean
+        PayService payService = (PayService) context.getBean("payService");
+        String result = payService.testPay("621020240826001800");
+        System.out.println(result);
     }
 
 }

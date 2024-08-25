@@ -92,7 +92,7 @@ public class MineApplicationContext {
                 ((InitializingBean) instance).afterPropertiesSet();
             }
 
-            // 初始化后
+            // 初始化后(AOP的实现，返回的是代理对象，那最终放到spring容器中的就是代理对象)
             for (BeanPostProcessor beanPostProcessor : beanPostProcessors) {
                 instance = beanPostProcessor.postProcessAfterInitialization(instance, beanName);
             }
