@@ -62,14 +62,22 @@ public class MineApplicationContext {
                 if (declaredField.isAnnotationPresent(Autowired.class)) {
                     // 给当前对象的属性赋值
                     declaredField.setAccessible(true);
+                    // TODO: 2024/8/25/025 这里get该对象中属性对应的bean对象实例，可能存在先后顺序问题，这里会获取不到，spring中会有处理，即等待单例池singletonObjects全部创建完，再进行依赖注入，即单例池每次只实例化对象的一半，即只实例化这个对象，属性等后面再注入
                     declaredField.set(instance, getBean(declaredField.getName()));
                 }
             }
 
-            // 如果实现了BeanNameAware接口，则调用setBeanName方法
+            // Aware回调：如果实现了BeanNameAware接口，则调用setBeanName方法
             if (instance instanceof BeanNameAware) {
                 ((BeanNameAware) instance).setBeanName(beanName);
             }
+
+            // 初始化InitializingBean
+            if (instance instanceof InitializingBean) {
+                ((InitializingBean) instance).afterPropertiesSet();
+            }
+
+
 
             return instance;
         } catch (InstantiationException e) {
@@ -79,6 +87,8 @@ public class MineApplicationContext {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
