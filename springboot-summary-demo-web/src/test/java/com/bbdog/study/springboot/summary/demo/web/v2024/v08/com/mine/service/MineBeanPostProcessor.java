@@ -19,6 +19,13 @@ public class MineBeanPostProcessor implements BeanPostProcessor {
         return bean;
     }
 
+    /**
+     * MineBeanPostProcessor其实就是模拟springAop的一个AnnotationAwareAspectJAutoProxyCreator类，这个类最终也是实现BeanPostProcessor的
+     *
+     * @param bean bean实例对象
+     * @param beanName bean名称
+     * @return 代理类
+     */
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) {
         log.info("初始化后");
