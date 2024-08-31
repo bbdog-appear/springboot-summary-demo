@@ -11,15 +11,19 @@ public class 钥匙开盒子 {
         currentBox.add("小盒子");
         currentBox.add("钥匙");
         currentBox.add("假钥匙");
-        String result = new 钥匙开盒子().openBox(currentBox);
+        String result = new 钥匙开盒子().openBox(currentBox, 1);
         System.out.println(result);
     }
 
-    public String openBox(LinkedList<String> currentBox) {
+    public String openBox(LinkedList<String> currentBox, int count) {
+        if (count > 4) {
+            return "很遗憾，没有找到钥匙";
+        }
         if ("钥匙".equals(currentBox.poll())) {
             return "恭喜你，找到了钥匙";
         } else {
-            return openBox(currentBox);
+            count++;
+            return openBox(currentBox, count);
         }
     }
 
