@@ -15,6 +15,15 @@ public class 钥匙开盒子 {
         System.out.println(result);
     }
 
+    /**
+     * 1.每个递归都有两个条件：
+     *  1.1 终止条件
+     *  1.2 递归条件
+     *
+     * @param currentBox 当前盒子
+     * @param count 终止条件
+     * @return 结果
+     */
     public String openBox(LinkedList<String> currentBox, int count) {
         if (count > 4) {
             return "很遗憾，没有找到钥匙";
