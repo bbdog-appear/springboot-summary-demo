@@ -2,6 +2,8 @@ package com.bbdog.study.springboot.summary.demo.common.util;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -23,6 +25,8 @@ public class RedisUtil {
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+    @Resource
+    private RedissonClient redissonClient;
 
     /**
      * redis插入，并设置key的存活时间，单位为秒
@@ -80,6 +84,19 @@ public class RedisUtil {
         });
         log.error("get response：{}", result);
         return result;
+    }
+
+    public void tryLock(String key) throws InterruptedException {
+        RLock lock = redissonClient.getLock(key);
+        if (lock.tryLock(5, -1, TimeUnit.SECONDS)) {
+            try {
+                log.info("获取锁成功");
+            } finally {
+                lock.unlock();
+            }
+        } else {
+            log.info("获取锁失败");
+        }
     }
 
 }
