@@ -85,6 +85,7 @@ public class 测试汇总类 extends SpringbootSummaryDemoWebApplication {
 
     /**
      * 测试JVM参数配置
+     * 增加注释
      *
      * @param args 入参
      */

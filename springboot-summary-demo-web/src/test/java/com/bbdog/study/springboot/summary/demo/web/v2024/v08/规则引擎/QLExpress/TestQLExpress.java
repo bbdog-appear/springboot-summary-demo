@@ -15,6 +15,7 @@ import org.junit.Test;
  * 5.弱类型语言，请不要定义类型声明,更不要用Template（Map<String, List>之类的）
  * 6.array的声明不一样
  * 7.min,max,round,print,println,like,in 都是系统默认函数的关键字，请不要作为变量名
+ * 新增注释
  */
 @Slf4j
 public class TestQLExpress extends SpringbootSummaryDemoWebApplication {
