@@ -1,4 +1,4 @@
-package com.bbdog.study.springboot.summary.demo.web.linksure.复习.算法.排序.简单排序;
+package com.bbdog.study.springboot.summary.demo.web.linksure.复习.算法.排序.简单;
 
 import java.util.Arrays;
 
