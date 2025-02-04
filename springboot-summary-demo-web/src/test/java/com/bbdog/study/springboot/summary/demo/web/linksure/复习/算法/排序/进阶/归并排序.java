@@ -43,7 +43,7 @@ public class 归并排序 {
         // 定义左子组和右子组的初始指针，以及临时数组指针
         int l = left;
         int r = mid + 1;
-        int i = 0;
+        int i = left;
         // 分别比较左右子组当前位置元素大小，较小的放入新数组
         while (l <= mid && r <= right) {
             if (arr[l] < arr[r]) {
