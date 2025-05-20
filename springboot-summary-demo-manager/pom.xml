@@ -21,6 +21,12 @@
             <groupId>com.bbdog.study</groupId>
             <artifactId>springboot-summary-demo-dal</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.csp</groupId>
+            <artifactId>sentinel-core</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

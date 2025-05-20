@@ -62,6 +62,7 @@
             <groupId>org.redisson</groupId>
             <artifactId>redisson</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>

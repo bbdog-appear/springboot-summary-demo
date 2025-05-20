@@ -164,6 +164,12 @@
                 <version>3.16.8</version>
             </dependency>
 
+            <dependency>
+                <groupId>com.alibaba.csp</groupId>
+                <artifactId>sentinel-core</artifactId>
+                <version>1.8.6</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
