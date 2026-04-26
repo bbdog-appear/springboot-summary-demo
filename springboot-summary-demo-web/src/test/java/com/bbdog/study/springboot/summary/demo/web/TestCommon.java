@@ -167,6 +167,7 @@ public class TestCommon extends SpringbootSummaryDemoWebApplicationTests{
     private void testLife () {
         // 23829519../后6计算符大小写
         // ccAri.../同q
+        // baishuang0112/95..70....W.
         System.out.println("end");
     }
 
